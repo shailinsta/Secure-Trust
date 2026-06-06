@@ -265,6 +265,37 @@ pip install torch flwr numpy pandas scikit-learn matplotlib seaborn
 
 ---
 
+## Reproducibility
+
+To ensure transparency and reproducibility, all source code, preprocessing scripts, trained models, and datasets are publicly available.
+
+### Resources
+
+- Dataset: https://huggingface.co/datasets/ShamsTahzib/Secure_Trust_FT
+
+Researchers can reproduce the experiments by downloading the datasets from Hugging Face and following the training instructions provided in this repository.
+
+## Dataset Setup
+
+The datasets required for SecureTrust-FL are hosted on Hugging Face:
+
+🔗 https://huggingface.co/datasets/ShamsTahzib/Secure_Trust_FT
+
+### Download Instructions
+
+1. Download the dataset ZIP file from the Hugging Face repository.
+2. Place the ZIP file dataset folder inside the project's `datasets/` directory.
+
+Expected project structure:
+
+
+SecureTrust-FL/
+│
+├── datasets/
+  ├── CICIDS2017.csv
+  ├── UNSW_NB15.csv
+  └── BoT_IoT.csv
+
 ## Running the Project
 
 execute the notebook:
