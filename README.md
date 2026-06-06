@@ -322,7 +322,6 @@ SecureTrust-FL/
 │   ├── trust_scores.csv
 │   ├── fgsm_results.csv
 │   ├── dp_results.csv
-│   └── confusion_matrix.png
 │
 ├── figures/
 ├── requirements.txt
