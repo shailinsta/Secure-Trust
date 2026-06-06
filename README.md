@@ -281,7 +281,6 @@ jupyter notebook Secure_Trust.ipynb
 SecureTrust-FL/
 │
 ├── Secure_Trust.ipynb
-├── main.py
 ├── datasets/
 │   ├── CICIDS2017/
 │   ├── UNSW-NB15/
