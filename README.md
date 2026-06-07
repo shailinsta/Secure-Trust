@@ -1,7 +1,7 @@
 # SecureTrust-FL: Trust-Aware Privacy-Preserving Federated Learning for Network Intrusion Detection
 
 
-The proliferation of distributed network environments and the Internet of Things (IoT) has increased the need for privacy-preserving intrusion detection systems capable of operating effectively under heterogeneous and non-independent and identically distributed (non-IID) data conditions. This paper proposes SecureTrust-FL, a trust-aware federated learning framework for privacy-preserving intrusion detection. The framework integrates Federated Learning, Blockchain-based Trust Management, Differential Privacy, FGSM-based Adversarial Learning, and Zero-Trust Security principles to support secure collaborative learning without requiring raw data sharing among participating entities. The framework is evaluated using three benchmark intrusion detection datasets, namely CICIDS2017, UNSW-NB15, and BoT-IoT, which are treated as independent federated clients. Experimental results demonstrate that the proposed framework achieves an overall Accuracy of 92.58%, Balanced Accuracy of 92.56%, F1-Score of 92.53%, and AUC of 96.83% across heterogeneous datasets. The results indicate that the federated model can effectively learn from distributed and heterogeneous data while preserving data privacy.Further analysis reveals the impact of class imbalance on intrusion detection performance, particularly in datasets containing skewed attack distributions, highlighting the importance of Balanced Accuracy and F1-Score in addition to overall Accuracy. Differential privacy experiments demonstrate the privacy–utility trade-off, where stronger privacy protection leads to a reduction in model performance. Adversarial robustness evaluation using FGSM perturbations also shows a noticeable decline in detection performance, indicating the need for stronger defense mechanisms against adversarial attacks. In addition, the trust ledger enhances transparency and accountability by monitoring client participation and maintaining trust records throughout the collaborative learning process. The results demonstrate that SecureTrust-FL provides an effective framework for privacy-preserving collaborative intrusion detection while integrating trust management, privacy protection, and secure federated learning within a unified architecture.
+The proliferation of distributed network environments and the Internet of Things (IoT) has increased the need for privacy-preserving intrusion detection systems capable of operating effectively under heterogeneous and non-independent and identically distributed (non-IID) data conditions. This paper proposes SecureTrust-FL, a trust-aware federated learning framework for privacy-preserving intrusion detection. The framework integrates Federated Learning, Blockchain-based Trust Management, Differential Privacy, FGSM-based Adversarial Learning, and Zero-Trust Security principles to support secure collaborative learning without requiring raw data sharing among participating entities. The framework is evaluated using three benchmark intrusion detection datasets, namely CICIDS2017, UNSW-NB15, and BoT-IoT, which are treated as independent federated clients. Experimental results demonstrate that the proposed framework achieves an overall Accuracy of 92.91%, Balanced Accuracy of 93.25%, F1-Score of 92.89%, and AUC of 95.50% across heterogeneous datasets. The results indicate that the federated model can effectively learn from distributed and heterogeneous data while preserving data privacy.Further analysis reveals the impact of class imbalance on intrusion detection performance, particularly in datasets containing skewed attack distributions, highlighting the importance of Balanced Accuracy and F1-Score in addition to overall Accuracy. Differential privacy experiments demonstrate the privacy–utility trade-off, where stronger privacy protection leads to a reduction in model performance. Adversarial robustness evaluation using FGSM perturbations also shows a noticeable decline in detection performance, indicating the need for stronger defense mechanisms against adversarial attacks. In addition, the trust ledger enhances transparency and accountability by monitoring client participation and maintaining trust records throughout the collaborative learning process. The results demonstrate that SecureTrust-FL provides an effective framework for privacy-preserving collaborative intrusion detection while integrating trust management, privacy protection, and secure federated learning within a unified architecture.
 
 
 SecureTrust-FL integrates:
@@ -124,25 +124,24 @@ The datasets were harmonized into a common feature space using mutual informatio
 
 ## Model Architecture
 
-Each client trains a lightweight Multi-Layer Perceptron (MLP):
-
-```
+```text
 Input Layer (13 Features)
-        │
-        ▼
-Fully Connected Layer
-        │
-       ReLU
-        │
-        ▼
-Fully Connected Layer
-        │
-       ReLU
-        │
-        ▼
-Output Layer
-(Binary Classification)
+        ↓
+Dense (128) + ReLU
+        ↓
+Dropout (0.2)
+        ↓
+Dense (64) + ReLU
+        ↓
+Dropout (0.2)
+        ↓
+Dense (32) + ReLU
+        ↓
+Dropout (0.1)
+        ↓
+Output Layer (2 Classes)
 ```
+
 
 Classification Labels:
 
@@ -153,47 +152,40 @@ Classification Labels:
 
 ## Experimental Results
 
-### Global Performance
+### Global Performance (Bootstrap Mean ± Standard Deviation)
 
-| Metric | Score (%) |
-|----------|----------:|
-| Accuracy | 92.58 |
-| Balanced Accuracy | 92.56 |
-| Micro F1-Score | 92.53 |
-| AUC | 96.83 |
+| Metric | Performance |
+|----------|------------|
+| Accuracy | 92.91% ± 0.45% |
+| Precision | 97.32% ± 0.39% |
+| Recall | 89.46% ± 0.73% |
+| Macro F1-Score | 92.89% ± 0.45% |
+| Weighted F1-Score | 92.92% ± 0.45% |
+| Balanced Accuracy | 93.25% ± 0.43% |
+| AUC-ROC | 95.50% ± 0.40% |
 
-These results demonstrate the ability of SecureTrust-FL to effectively learn from distributed and heterogeneous intrusion detection datasets while preserving privacy.
-
----
-
-### Dataset-wise Performance
-
-| Dataset | Accuracy (%) | Balanced Accuracy (%) | Weighted F1 (%) |
-|----------|------------:|---------------------:|---------------:|
-| CICIDS2017 | 93.93 | 95.21 | 94.60 |
-| UNSW-NB15 | 72.80 | 74.13 | 73.17 |
-| BoT-IoT | 96.26 | 96.26 | 98.09 |
-
-The results indicate strong generalization across heterogeneous network environments.
+> Final paper results are reported using Bootstrap Mean ± Standard Deviation.
 
 ---
 
-## Differential Privacy Evaluation
+## Dataset-Wise Results
 
-The framework evaluates privacy preservation by injecting Gaussian noise into model updates.
-
-Noise levels tested:
-
-```
-σ = 0.000
-σ = 0.001
-σ = 0.005
-σ = 0.010
-```
-
-Results demonstrate the expected privacy–utility trade-off, where stronger privacy guarantees slightly reduce detection performance while maintaining acceptable accuracy.
+| Dataset | Accuracy (%) |
+|----------|-------------|
+| CICIDS2017 | 93.93 |
+| UNSW-NB15 | 72.80 |
+| BoT-IoT | 96.26 |
 
 ---
+
+## Differential Privacy Results
+
+| Noise Sigma | Accuracy | Balanced Accuracy | Macro F1 | AUC |
+|------------|-----------|-------------------|----------|------|
+| 0.000 | 90.76% | 91.02% | 90.73% | 95.85% |
+| 0.001 | 91.00% | 91.30% | 90.98% | 95.98% |
+| 0.005 | 89.72% | 90.19% | 89.71% | 95.83% |
+| 0.010 | 88.52% | 88.51% | 88.44% | 93.64% |
 
 ## Adversarial Robustness Evaluation
 
